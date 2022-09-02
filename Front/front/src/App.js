@@ -30,7 +30,7 @@ function App() {
           console.log(inputs.password);
           handleOnClick();
           fetch(
-            "http://localhost:8080/login?email=" +
+            "http://3.38.232.237:8080/login?email=" +
               inputs.email +
               "&pw=" +
               inputs.password,
@@ -48,7 +48,7 @@ function App() {
       </button>
       <button
         onClick={async () => {
-          fetch("http://localhost:8080/logout", {
+          fetch("http://3.38.232.237:8080/logout", {
             method: "post",
             headers: {
               "Content-Type": "application/json; charset=utf-8",
@@ -61,7 +61,7 @@ function App() {
       </button>
       <button
         onClick={async () => {
-          fetch("http://localhost:8080/user", {
+          fetch("http://3.38.232.237:8080/user", {
             method: "post",
             headers: {
               "Content-Type": "application/json; charset=utf-8",
