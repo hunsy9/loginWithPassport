@@ -48,14 +48,33 @@ function App() {
       </button>
       <button
         onClick={async () => {
-          fetch("http://localhost:8080/logout");
+          fetch("http://localhost:8080/logout", {
+            method: "post",
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+            },
+            credentials: "include",
+          });
         }}
       >
         로그아웃
       </button>
       <button
         onClick={async () => {
-          fetch("http://localhost:8080/user");
+          fetch("http://localhost:8080/user", {
+            method: "post",
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+            },
+            credentials: "include",
+          })
+            .then((response) => {
+              return response.json();
+            })
+            .then((response) => {
+              console.log(response);
+              return alert(response.email);
+            });
         }}
       >
         유저확인
