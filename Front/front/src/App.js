@@ -53,6 +53,13 @@ function App() {
       >
         로그아웃
       </button>
+      <button
+        onClick={async () => {
+          fetch("http://localhost:8080/user");
+        }}
+      >
+        유저확인
+      </button>
     </div>
   );
 }
