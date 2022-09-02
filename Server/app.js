@@ -26,7 +26,7 @@ app.use(
     secret: "sandburg",
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 30000, secure: false, httpOnly: false },
+    cookie: { secure: false, httpOnly: false },
   })
 );
 
@@ -88,27 +88,37 @@ passport.use(
 );
 
 passport.serializeUser(function (user, done) {
-  done(null, user.id);
+  done(null, user.email);
+  console.log("시리얼라이즈");
 });
 
-passport.deserializeUser(function (id, done) {
-  var userinfo;
+passport.deserializeUser(function (email, done) {
+  console.log("ddddd");
+  var user;
   var sql = "SELECT * FROM client WHERE email=?";
   con.query(sql, [email], function (err, result) {
     if (err) console.log("mysql 에러");
 
     console.log("deserializeUser mysql result : ", result);
     var json = JSON.stringify(result[0]);
-    userinfo = JSON.parse(json);
-    done(null, userinfo);
+    user = JSON.parse(json);
+    done(null, user);
   });
 });
 
-app.get("/logout", function (req, res) {
-  req.logout();
-  req.session.save((err) => {
+app.post("/logout", function (req, res, next) {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
     res.redirect("/");
   });
+});
+
+app.post("/user", function (req, res) {
+  console.log("userrouteron");
+  console.log(req.user);
+  res.send(req.user);
 });
 
 app.listen(8080, function () {
